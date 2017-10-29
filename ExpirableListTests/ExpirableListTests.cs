@@ -31,7 +31,7 @@ namespace ExpirableListTests
 
             // Assert
             Assert.IsTrue(raised);
-            Assert.IsTrue(expirableList.IsStopped);
+            Assert.IsTrue(expirableList.IsFinished);
         }
 
         [TestMethod]
@@ -55,7 +55,7 @@ namespace ExpirableListTests
 
             // Assert
             Assert.IsTrue(raised);
-            Assert.IsTrue(expirableList.IsStopped);
+            Assert.IsTrue(expirableList.IsFinished);
         }
 
         [TestMethod]

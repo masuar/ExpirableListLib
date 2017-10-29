@@ -3,3 +3,7 @@
 ################################################################################
 
 *.suo
+/ExpirableListLib/bin/Debug
+/ExpirableListLib/obj/Debug
+/ExpirableListTests/bin/Debug
+/ExpirableListTests/obj/Debug

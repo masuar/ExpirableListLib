@@ -13,6 +13,7 @@ namespace ExpirableListLib
         private int timeoutInMs;
         private List<T> items;
         private Timer timer;
+        private object thisLock = new object();
 
         public event ListFinishedEventHandler<T> ListFinished;   
 
@@ -32,14 +33,18 @@ namespace ExpirableListLib
 
             if (this.timer.Enabled)
             {
-                this.items.Add(item);
-
-                if (this.items.Count == this.items.Capacity)
+                lock (thisLock)
                 {
-                    this.timer.Stop();
-                    if (this.ListFinished != null)
+                    this.items.Add(item);
+
+                    if (this.items.Count == this.items.Capacity)
                     {
-                        this.ListFinished(this, new ListFinishedEventArgs<T>(this.items, true));
+                        this.timer.Stop();
+                        if (this.ListFinished != null)
+                        {
+                            this.ListFinished(this, new ListFinishedEventArgs<T>(this.items, true));
+                            this.ListFinished = null;
+                        }
                     }
                 }
             }
@@ -65,7 +70,7 @@ namespace ExpirableListLib
             }
         }
 
-        public bool IsStopped
+        public bool IsFinished
         {
             get
             {
