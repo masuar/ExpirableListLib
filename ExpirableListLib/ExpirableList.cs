@@ -10,7 +10,6 @@ namespace ExpirableListLib
 {
     public class ExpirableList<T>
     {
-        private int timeoutInMs;
         private List<T> items;
         private Timer timer;
         private object thisLock = new object();

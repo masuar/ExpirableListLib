@@ -75,5 +75,21 @@ namespace ExpirableListTests
             System.Threading.Thread.Sleep(500);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void AddingItemsWhenExpired_ThrowException()
+        {
+            // Arrange
+            bool complete = false;
+            ExpirableList<string> expirableList = new ExpirableList<string>(500, 3);
+            expirableList.ListFinished += (sender, e) => { complete = e.IsListComplete; };
+            expirableList.Add("item1");
+            expirableList.Add("item2");
+
+            // Execute
+            System.Threading.Thread.Sleep(600);
+            expirableList.Add("item3");
+        }
+
     }
 }
